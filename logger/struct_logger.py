@@ -27,6 +27,7 @@ class StructLogger(HummingbotLogger):
                 self._log(
                     logging.ERROR,
                     "event_log message must be of type dict.",
+                    (),
                     extra={"do_not_send": True},
                 )
                 return

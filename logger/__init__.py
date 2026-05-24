@@ -12,10 +12,10 @@ from logger.logger import HummingbotLogger
 NETWORK = DEBUG + 6
 
 
-def log_encoder(obj):
+def log_encoder(obj: object) -> str | dict[str, object]:
     if isinstance(obj, (Decimal, Enum)):
         return str(obj)
-    elif dataclasses.is_dataclass(obj):
+    elif dataclasses.is_dataclass(obj) and not isinstance(obj, type):
         return dataclasses.asdict(obj)
     raise TypeError(f"Object of type '{type(obj).__name__}' is not JSON serializable")
 
