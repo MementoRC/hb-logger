@@ -8,7 +8,9 @@ dynamic = ["version"]
 description = "Structured logging utilities for Hummingbot sub-packages"
 requires-python = ">=3.12"
 license = {text = "Apache-2.0"}
-dependencies = []
+dependencies = [
+    "pandas>=2.0",
+]
 
 [project.optional-dependencies]
 dev = [
@@ -46,6 +48,11 @@ line-length = 100
 [tool.ruff.lint]
 select = ["E", "F", "I", "W", "B", "UP", "N", "SIM", "TCH"]
 
+[tool.ruff.lint.per-file-ignores]
+"logger/cli_handler.py" = ["N802", "E501"]
+"logger/logger.py" = ["N802", "E501"]
+"logger/struct_logger.py" = ["N802", "E501"]
+
 [tool.ruff.format]
 quote-style = "double"
 
@@ -56,6 +63,34 @@ warn_return_any = true
 warn_unused_configs = true
 disallow_untyped_defs = true
 warn_unused_ignores = true
+
+[[tool.mypy.overrides]]
+# Vendored from hummingbot/logger upstream — kept in upstream form to ease
+# future syncs. Annotations will be added incrementally; for now relax strict
+# mode on these specific modules without weakening the package-wide default.
+module = [
+    "logger",
+    "logger.logger",
+    "logger.cli_handler",
+    "logger.struct_logger",
+    "logger.application_warning",
+]
+disallow_untyped_defs = false
+disallow_untyped_calls = false
+disallow_incomplete_defs = false
+warn_return_any = false
+# Pre-existing upstream type defects (StreamHandler missing generic param,
+# TracebackType union-attr, tuple-shape mismatch in findCaller, dataclass
+# asdict instance-vs-class, Logger._log signature). Suppressed in vendored
+# form; follow-up will either fix upstream or annotate locally.
+disable_error_code = [
+    "type-arg",
+    "union-attr",
+    "assignment",
+    "arg-type",
+    "call-arg",
+    "no-untyped-def",
+]
 
 [tool.coverage.run]
 branch = true
@@ -69,5 +104,18 @@ skip_covered = true
 exclude_lines = ["no cov", "if __name__", "if TYPE_CHECKING", "raise NotImplementedError", "@overload"]
 
 [tool.hummingbot.supersedes]
-modules = []
-test_paths = []
+# Modules that this sub-package supersedes in the parent hummingbot install.
+# NOTE: hummingbot.logger.log_server_client is intentionally NOT in this list -
+# it depends on hummingbot.core.{network_base,network_iterator,utils.async_*}
+# and requires its own extraction story. Consumers of log_server_client should
+# continue to import it from hummingbot until that work lands.
+modules = [
+    "hummingbot.logger",
+    "hummingbot.logger.application_warning",
+    "hummingbot.logger.cli_handler",
+    "hummingbot.logger.logger",
+    "hummingbot.logger.struct_logger",
+]
+test_paths = [
+    "test/hummingbot/logger/",
+]
