@@ -79,18 +79,6 @@ disallow_untyped_defs = false
 disallow_untyped_calls = false
 disallow_incomplete_defs = false
 warn_return_any = false
-# Pre-existing upstream type defects (StreamHandler missing generic param,
-# TracebackType union-attr, tuple-shape mismatch in findCaller, dataclass
-# asdict instance-vs-class, Logger._log signature). Suppressed in vendored
-# form; follow-up will either fix upstream or annotate locally.
-disable_error_code = [
-    "type-arg",
-    "union-attr",
-    "assignment",
-    "arg-type",
-    "call-arg",
-    "no-untyped-def",
-]
 
 [tool.coverage.run]
 branch = true
