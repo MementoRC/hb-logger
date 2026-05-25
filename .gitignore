@@ -76,3 +76,9 @@ pixi.lock
 .env.production.local
 .claude/
 logs/
+
+# Claude Code / AI development tooling
+.claude/
+.mcp.json
+.aider*
+.aider/
