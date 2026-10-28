@@ -75,7 +75,7 @@ format-check = "ruff format --check logger tests"
 typecheck = "mypy logger"
 build = "hatchling build"
 coverage = "pytest tests/ --cov=logger --cov-report=term-missing"
-quality = { depends-on = ["lint", "format-check"] }
+quality = { depends-on = ["lint", "format-check", "typecheck"] }
 check = { depends-on = ["quality", "typecheck", "test"] }
 
 [tool.pytest.ini_options]
