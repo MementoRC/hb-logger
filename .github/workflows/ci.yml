@@ -5,6 +5,8 @@ on:
     branches: [main, development]
   pull_request:
     branches: [main, development]
+  # Lets pixi-lock-refresh.yml start CI on its bot branch (github.token can't trigger push/PR runs)
+  workflow_dispatch:
 
 # Cancel in-progress CI runs for the same ref/branch
 concurrency:
