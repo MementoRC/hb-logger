@@ -18,12 +18,6 @@ prefix, per the hb-* ecosystem convention).
 ## Installation
 
 ```bash
-pip install hb-logger
-```
-
-Or with pixi:
-
-```bash
 pixi add hb-logger
 ```
 
