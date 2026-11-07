@@ -19,6 +19,11 @@ HummingbotLogger module is fully self-contained:
     and network() degrade to silent no-ops while standard logging still
     runs unconditionally.
 
+Since 1.0.0 importing ``logger`` has no side effects. The composition root
+calls ``logger.install(StructLogger, StructLogRecord, reclass_prefixes=(...))``
+once at startup: it sets the logger class, the record factory and the custom
+level names, and re-classes pre-existing loggers under the given prefixes.
+
 Drop-in compatibility is therefore handled entirely by the
 [tool.hummingbot.supersedes] table in pyproject.toml plus the registration
 call wired into hummingbot.client.hummingbot_application.__init__. No

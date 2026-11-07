@@ -1,15 +1,14 @@
 """Structured logging utilities for Hummingbot sub-packages."""
 
 import dataclasses
-import logging
 from decimal import Decimal
 from enum import Enum
 from logging import CRITICAL, DEBUG, ERROR, INFO, WARNING
 
 from logger.__about__ import __version__
+from logger._install import install
+from logger.levels import EVENT_LOG_LEVEL, METRICS_LOG_LEVEL, NETWORK
 from logger.logger import HummingbotLogger
-
-NETWORK = DEBUG + 6
 
 
 def log_encoder(obj: object) -> str | dict[str, object]:
@@ -28,8 +27,9 @@ __all__ = [
     "ERROR",
     "CRITICAL",
     "NETWORK",
+    "EVENT_LOG_LEVEL",
+    "METRICS_LOG_LEVEL",
     "HummingbotLogger",
+    "install",
     "log_encoder",
 ]
-logging.setLoggerClass(HummingbotLogger)
-logging.addLevelName(NETWORK, "NETWORK")
