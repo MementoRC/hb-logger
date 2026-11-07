@@ -6,10 +6,9 @@ import sys
 import time
 import traceback
 from collections.abc import Callable
+from datetime import datetime
 from logging import Logger as PythonLogger
 from typing import ClassVar
-
-import pandas as pd
 
 from .application_warning import ApplicationWarning
 
@@ -61,9 +60,7 @@ class HummingbotLogger(PythonLogger):
 
         self.log(INFO, msg)
         if not HummingbotLogger.is_testing_mode() and HummingbotLogger._notify_callback is not None:
-            HummingbotLogger._notify_callback(
-                f"({pd.Timestamp.fromtimestamp(int(time.time()))}) {msg}"
-            )
+            HummingbotLogger._notify_callback(f"({datetime.fromtimestamp(int(time.time()))}) {msg}")
 
     def network(self, log_msg: str, app_warning_msg: str | None = None, *args, **kwargs):
         from . import NETWORK

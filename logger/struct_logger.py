@@ -2,11 +2,7 @@ import json
 import logging
 
 from logger import HummingbotLogger, log_encoder
-
-EVENT_LOG_LEVEL = 15
-METRICS_LOG_LEVEL = 14
-logging.addLevelName(EVENT_LOG_LEVEL, "EVENT_LOG")
-logging.addLevelName(METRICS_LOG_LEVEL, "METRIC_LOG")
+from logger.levels import EVENT_LOG_LEVEL, METRICS_LOG_LEVEL  # noqa: F401
 
 
 class StructLogRecord(logging.LogRecord):
